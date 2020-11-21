@@ -11,6 +11,7 @@ namespace PostTripletex
 			var consumerToken = "";
 			var employeeToken = "";
 
+			// test
 			await Authentication.CreateSessionToken(new Credentials(consumerToken, employeeToken));
 
 			Command.Welcome();
