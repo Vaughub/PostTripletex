@@ -17,7 +17,7 @@ namespace PostTripletex
 			Console.WriteLine("     cu(customer) - Post/Del");
 			Console.WriteLine("     co(contact)  - Post");
 			Console.WriteLine("     e(employee)  - Post");
-			Console.WriteLine("\nExample: del p 5 (deletes 5 products)");
+			Console.WriteLine("\nExample: del 5 p (deletes 5 products)");
 			Console.Write("> ");
 		}
 

@@ -8,8 +8,6 @@ namespace PostTripletex
 	{
 		static async Task Main(string[] args)
 		{
-			var consumerToken = "";
-			var employeeToken = "";
 
 			await Authentication.CreateSessionToken(new Credentials(consumerToken, employeeToken));
 
@@ -27,7 +25,7 @@ namespace PostTripletex
 					continue;
 				}
 
-				if (command?.Length != 3 || !int.TryParse(command[2], out var number))
+				if (command?.Length != 3 || !int.TryParse(command[1], out var number))
 				{
 					Command.Invalid();
 					continue;
@@ -35,16 +33,16 @@ namespace PostTripletex
 
 				if (command[0].ToLower() == "post")
 				{
-					if (command[1].ToLower() == "p") await Post.Product(MakeEmployee(), number);
-					else if (command[1].ToLower() == "co") await Post.Contact(MakeEmployee(), number);
-					else if (command[1].ToLower() == "e") await Post.Employee(number);
-					else if (command[1].ToLower() == "cu") await Post.Customer(number);
+					if (command[2].ToLower() == "p") await Post.Product(MakeEmployee(), number);
+					else if (command[2].ToLower() == "co") await Post.Contact(MakeEmployee(), number);
+					else if (command[2].ToLower() == "e") await Post.Employee(number);
+					else if (command[2].ToLower() == "cu") await Post.Customer(number);
 					else Command.Invalid();
 				}
 				else if (command[0].ToLower() == "del")
 				{
-					if (command[1].ToLower() == "p") await Delete.Product(number);
-					else if (command[1].ToLower() == "cu") await Delete.Customer(number);
+					if (command[2].ToLower() == "p") await Delete.Product(number);
+					else if (command[2].ToLower() == "cu") await Delete.Customer(number);
 					else Command.Invalid();
 				}
 				else Command.Invalid();

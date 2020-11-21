@@ -49,7 +49,7 @@ namespace PostTripletex
 
 				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Contact post error: {response.StatusCode}");
 
-				Console.Write($"\rContact {i + 1} made");
+				Console.Write($"\r{i + 1} Contact made");
 			}
 
 			Console.WriteLine("\n");
@@ -93,7 +93,7 @@ namespace PostTripletex
 
 				FileDoc.WriteFile(response.Data.Value, "Product.csv");
 
-				Console.Write($"\rProduct {i + 1} made");
+				Console.Write($"\r{i + 1} Product made");
 			}
 
 			Console.WriteLine("\n");
@@ -132,7 +132,7 @@ namespace PostTripletex
 
 				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Employee post error: {response.StatusCode}");
 
-				Console.Write($"\rEmployee {i + 1} made");
+				Console.Write($"\r{i + 1} Employee made");
 			}
 
 			Console.WriteLine("\n");
@@ -162,7 +162,7 @@ namespace PostTripletex
 
 				FileDoc.WriteFile(response.Data.Value, "Customer.csv");
 
-				Console.Write($"\rCustomer {i + 1} made");
+				Console.Write($"\r{i + 1} Customer made");
 			}
 
 			Console.WriteLine("\n");
