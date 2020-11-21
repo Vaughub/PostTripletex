@@ -8,6 +8,8 @@ namespace PostTripletex
 	{
 		static async Task Main(string[] args)
 		{
+			var consumerToken = "";
+			var employeeToken = "";
 
 			await Authentication.CreateSessionToken(new Credentials(consumerToken, employeeToken));
 
