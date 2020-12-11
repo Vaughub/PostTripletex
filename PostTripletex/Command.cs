@@ -10,6 +10,7 @@ namespace PostTripletex
 			Console.WriteLine("  Commands:");
 			Console.WriteLine("     q    - quit program");
 			Console.WriteLine("     sync - sync to local file");
+			Console.WriteLine("     token - delete tokens");
 			Console.WriteLine("     post - post to Tripletex");
 			Console.WriteLine("     del  - delete from Tripletex");
 			Console.WriteLine("  Options:");

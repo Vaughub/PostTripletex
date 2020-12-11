@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PostTripletex
 {
@@ -72,6 +73,36 @@ namespace PostTripletex
 			var i = (int.Parse(lastLine) + 1).ToString().PadLeft(4, '0');
 
 			return i;
+		}
+
+		public static async Task GetTokens()
+		{
+			if (File.Exists("Tokens.txt"))
+			{
+				var tokens = await File.ReadAllLinesAsync("Tokens.txt");
+
+				await Authentication.CreateSessionToken(new Credentials(tokens[0], tokens[1]));
+			}
+			else
+			{
+				var tokens = new string[2];
+
+				Console.WriteLine("consumerToken");
+				Console.Write("> ");
+				tokens[0] = Console.ReadLine()?.Trim();
+
+				Console.WriteLine();
+
+				Console.WriteLine("employeeToken");
+				Console.Write("> ");
+				tokens[1] = Console.ReadLine()?.Trim();
+
+				Console.WriteLine();
+
+				await Authentication.CreateSessionToken(new Credentials(tokens[0], tokens[1]));
+
+				File.WriteAllLines("Tokens.txt", tokens);
+			}
 		}
 	}
 }

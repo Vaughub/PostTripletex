@@ -35,6 +35,8 @@ namespace PostTripletex
 
 			var response = await client.PutAsync<SingleValueResponse<AuthResponse>>(request);
 
+			if (response.Value == null) throw new Exception("Authentication failed");
+
 			return response.Value.Token;
 		}
 	}
