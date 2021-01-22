@@ -40,17 +40,17 @@ namespace PostTripletex
 				await Get.Sync();
 				Console.WriteLine("Sync complete\n");
 				Console.Write("> ");
-
 				return;
 			}
 
 			if (command?[0] == "token")
 			{
-				File.Delete("Tokens.txt");
+				File.Delete(Path.Combine("Data", "Tokens.txt"));
 				Console.WriteLine("Tokens deleted\n");
 
 				await Authentication.Authenticate();
 				await Get.Sync();
+				return;
 			}
 
 			if (command?[0] == "webhook" && command.Length > 1)

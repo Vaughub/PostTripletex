@@ -32,7 +32,7 @@ namespace PostTripletex
 
 			if (!File.Exists(filePath))
 			{
-				System.IO.Directory.CreateDirectory(_directory);
+				Directory.CreateDirectory(_directory);
 
 				using var swr = File.CreateText(filePath);
 				swr.WriteLine(fileName == "Product.csv" ? "Number,Name,Id" : "Name,Id");
@@ -78,7 +78,9 @@ namespace PostTripletex
 			var filePath = Path.Combine(_directory, "Tokens.txt");
 
 			if (File.Exists(filePath)) return await File.ReadAllLinesAsync(filePath);
-			
+
+			Directory.CreateDirectory(_directory);
+
 			var tokens = new string[2];
 
 			Console.WriteLine("consumerToken");
