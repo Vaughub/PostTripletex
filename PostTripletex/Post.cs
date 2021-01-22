@@ -11,15 +11,13 @@ namespace PostTripletex
 	{
 		private static readonly Random Random = new Random();
 
-		public static async Task Contact(Employee employee, int number)
+		public static async Task Contact(int number)
 		{
 			var contact = new Contact
 			{
 				customer =
 				{
 					name = "Customer",
-					accountManager = employee,
-					deliveryAddress = {employee = employee},
 					category1 = {name = "C1"},
 					category2 = {name = "C2"},
 					category3 = {name = "C3"}
@@ -56,15 +54,13 @@ namespace PostTripletex
 			Console.Write("> ");
 		}
 
-		public static async Task Product(Employee employee, int number)
+		public static async Task Product(int number)
 		{
 			var product = new Product
 			{
 				supplier =
 				{
 					name = "Supp",
-					accountManager = employee,
-					deliveryAddress = {employee = employee},
 					category1 = {name = "C1"},
 					category2 = {name = "C2"},
 					category3 = {name = "C3"}
@@ -89,7 +85,7 @@ namespace PostTripletex
 
 				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
 
-				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Product post error: {response.StatusCode}");
+				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
 				FileDoc.WriteFile(response.Data.Value, "Product.csv");
 
@@ -128,9 +124,9 @@ namespace PostTripletex
 				request.AddJsonBody(employee);
 				request.AddHeader("Authorization", $"Basic {Authentication.EncodedCredentials}");
 
-				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
+				var response = await client.ExecutePostAsync(request);
 
-				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Employee post error: {response.StatusCode}");
+				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
 				Console.Write($"\r{i + 1} Employee created");
 			}
@@ -141,24 +137,20 @@ namespace PostTripletex
 
 		public static async Task Customer(int number)
 		{
-			var customer = new Model.Customer();
-
 			var personNameGenerator = new PersonNameGenerator();
 
 			var client = new RestClient("https://api.tripletex.io/v2/");
 
 			for (var i = 0; i < number; i++)
 			{
-				customer.name = personNameGenerator.GenerateRandomFirstAndLastName();
-
 				var request = new RestRequest("customer");
 
-				request.AddJsonBody(customer);
+				request.AddJsonBody(new {name = personNameGenerator.GenerateRandomFirstAndLastName()});
 				request.AddHeader("Authorization", $"Basic {Authentication.EncodedCredentials}");
 
 				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
 
-				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Customer post error: {response.StatusCode}");
+				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
 				FileDoc.WriteFile(response.Data.Value, "Customer.csv");
 

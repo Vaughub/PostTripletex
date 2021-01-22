@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using PostTripletex.Model;
 
-namespace PostTripletex
+namespace PostTripletex.Model
 {
 	public class EmploymentDetails
 	{
@@ -66,5 +65,26 @@ namespace PostTripletex
 	{
 		public int id { get; set; }
 		public string name { get; set; }
+	}
+
+	public class KeyInfo
+	{
+		public string name { get; set; }
+		public string number { get; set; }
+		public long id { get; set; }
+	}
+
+	public class ErrorWrap
+	{
+		public string status { get; set; }
+		public ValidationMessages[] validationMessages { get; set; }
+
+	}
+
+	public class ValidationMessages
+	{
+		public string field { get; set; }
+		public string message { get; set; }
+		public string path { get; set; }
 	}
 }

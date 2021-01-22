@@ -1,6 +1,4 @@
-﻿using PostTripletex.Model;
-
-namespace PostTripletex
+﻿namespace PostTripletex.Model
 {
 	public class Product
 	{
@@ -28,12 +26,5 @@ namespace PostTripletex
 		public string name { get; set; }
 		public string nameShort { get; set; }
 		public string commonCode { get; set; }
-	}
-
-	public class KeyInfo
-	{
-		public string name { get; set; }
-		public string number { get; set; }
-		public long id { get; set; }
 	}
 }

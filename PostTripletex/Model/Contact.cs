@@ -1,6 +1,4 @@
-﻿using PostTripletex.Model;
-
-namespace PostTripletex
+﻿namespace PostTripletex.Model
 {
 	public class Contact
 	{

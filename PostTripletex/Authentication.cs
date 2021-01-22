@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
+using PostTripletex.Model;
 using RestSharp;
 
 namespace PostTripletex
@@ -9,6 +12,27 @@ namespace PostTripletex
 		private static readonly string _apiAuthEndpoint = "https://api.tripletex.io/v2/token/session/:create?";
 		public static string EncodedCredentials;
 
+		public static async Task Authenticate()
+		{
+			while (true)
+			{
+				try
+				{
+					var tokens = await FileDoc.GetTokens();
+
+					await CreateSessionToken(new Credentials(tokens[0], tokens[1]));
+
+					File.WriteAllLines(Path.Combine("Data", "Tokens.txt"), tokens);
+
+					break;
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e.Message + "\n");
+				}
+			}
+		}
+
 		public static async Task CreateSessionToken(Credentials credentials)
 		{
 			var sessionToken = await GetSessionToken(credentials);
@@ -17,7 +41,7 @@ namespace PostTripletex
 
 		private static async Task<string> ToBase64(string sessionToken)
 		{
-			var plainTextBytes = System.Text.Encoding.UTF8.GetBytes($"0:{sessionToken}");
+			var plainTextBytes = Encoding.UTF8.GetBytes($"0:{sessionToken}");
 
 			return await Task.FromResult(Convert.ToBase64String(plainTextBytes));
 		}

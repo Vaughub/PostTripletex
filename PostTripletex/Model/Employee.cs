@@ -16,7 +16,7 @@
 	public class Department
 	{
 		public string name { get; set; }
-		public Employee departmentManager { get; set; }
+		// public Employee departmentManager { get; set; }
 	}
 
 	public class Employment

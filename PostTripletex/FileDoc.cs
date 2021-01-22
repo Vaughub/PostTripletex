@@ -2,19 +2,21 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using PostTripletex.Model;
 
 namespace PostTripletex
 {
 	public class FileDoc
 	{
+		private const string _directory = "Data";
+
 		public static void WriteFile(KeyInfo info, string fileName)
 		{
-			var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Storage", "Tripletex");
-			var filePath = Path.Combine(directory, fileName);
-
+			var filePath = Path.Combine(_directory, fileName);
+			
 			if (!File.Exists(filePath))
 			{
-				Directory.CreateDirectory(directory);
+				Directory.CreateDirectory(_directory);
 
 				using var swr = File.CreateText(filePath);
 				swr.WriteLine(fileName == "Product.csv" ? "Number,Name,Id" : "Name,Id");
@@ -26,12 +28,11 @@ namespace PostTripletex
 
 		public static void WriteFile(string[] info, string fileName)
 		{
-			var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Storage", "Tripletex");
-			var filePath = Path.Combine(directory, fileName);
+			var filePath = Path.Combine(_directory, fileName);
 
 			if (!File.Exists(filePath))
 			{
-				Directory.CreateDirectory(directory);
+				System.IO.Directory.CreateDirectory(_directory);
 
 				using var swr = File.CreateText(filePath);
 				swr.WriteLine(fileName == "Product.csv" ? "Number,Name,Id" : "Name,Id");
@@ -48,24 +49,21 @@ namespace PostTripletex
 
 		public static string[] ReadFile(string fileName)
 		{
-			var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Storage", "Tripletex");
-			var filePath = Path.Combine(directory, fileName);
+			var filePath = Path.Combine(_directory, fileName);
 
 			return File.Exists(filePath) ? File.ReadAllLines(filePath).Skip(1).ToArray() : null;
 		}
 
 		public static void DeleteFile(string fileName)
 		{
-			var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Storage", "Tripletex");
-			var filePath = Path.Combine(directory, fileName);
+			var filePath = Path.Combine(_directory, fileName);
 
 			if (File.Exists(filePath)) File.Delete(filePath);
 		}
 
 		public static string GetNumber(string fileName)
 		{
-			var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Storage", "Tripletex");
-			var filePath = Path.Combine(directory, fileName);
+			var filePath = Path.Combine(_directory, fileName);
 
 			if (!File.Exists(filePath)) return "0000";
 
@@ -75,34 +73,27 @@ namespace PostTripletex
 			return i;
 		}
 
-		public static async Task GetTokens()
+		public static async Task<string[]> GetTokens()
 		{
-			if (File.Exists("Tokens.txt"))
-			{
-				var tokens = await File.ReadAllLinesAsync("Tokens.txt");
+			var filePath = Path.Combine(_directory, "Tokens.txt");
 
-				await Authentication.CreateSessionToken(new Credentials(tokens[0], tokens[1]));
-			}
-			else
-			{
-				var tokens = new string[2];
+			if (File.Exists(filePath)) return await File.ReadAllLinesAsync(filePath);
+			
+			var tokens = new string[2];
 
-				Console.WriteLine("consumerToken");
-				Console.Write("> ");
-				tokens[0] = Console.ReadLine()?.Trim();
+			Console.WriteLine("consumerToken");
+			Console.Write("> ");
+			tokens[0] = Console.ReadLine()?.Trim();
 
-				Console.WriteLine();
+			Console.WriteLine();
 
-				Console.WriteLine("employeeToken");
-				Console.Write("> ");
-				tokens[1] = Console.ReadLine()?.Trim();
+			Console.WriteLine("employeeToken");
+			Console.Write("> ");
+			tokens[1] = Console.ReadLine()?.Trim();
 
-				Console.WriteLine();
+			Console.WriteLine();
 
-				await Authentication.CreateSessionToken(new Credentials(tokens[0], tokens[1]));
-
-				File.WriteAllLines("Tokens.txt", tokens);
-			}
+			return tokens;
 		}
 	}
 }
