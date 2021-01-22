@@ -83,13 +83,13 @@ namespace PostTripletex
 
 			var tokens = new string[2];
 
-			Console.WriteLine("consumerToken");
+			Console.WriteLine("ConsumerToken");
 			Console.Write("> ");
 			tokens[0] = Console.ReadLine()?.Trim();
 
 			Console.WriteLine();
 
-			Console.WriteLine("employeeToken");
+			Console.WriteLine("EmployeeToken");
 			Console.Write("> ");
 			tokens[1] = Console.ReadLine()?.Trim();
 

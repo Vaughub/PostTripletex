@@ -30,7 +30,7 @@ namespace PostTripletex
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 			}
 
-			Console.WriteLine("Url change complete\n");
+			Console.WriteLine("Done\n");
 			Console.Write("> ");
 		}
 	}

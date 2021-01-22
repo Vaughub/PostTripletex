@@ -12,6 +12,7 @@ namespace PostTripletex
 			await Authentication.Authenticate();
 			await Get.Sync();
 
+			Console.Clear();
 			Command.Welcome();
 
 			while (true)
@@ -38,7 +39,7 @@ namespace PostTripletex
 			if (command?[0] == "sync")
 			{
 				await Get.Sync();
-				Console.WriteLine("Sync complete\n");
+				Console.WriteLine("Done\n");
 				Console.Write("> ");
 				return;
 			}
@@ -46,10 +47,12 @@ namespace PostTripletex
 			if (command?[0] == "token")
 			{
 				File.Delete(Path.Combine("Data", "Tokens.txt"));
-				Console.WriteLine("Tokens deleted\n");
+				Console.WriteLine("Done\n");
 
 				await Authentication.Authenticate();
 				await Get.Sync();
+				Console.Clear();
+				Command.Welcome();
 				return;
 			}
 

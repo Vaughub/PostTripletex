@@ -6,7 +6,7 @@ namespace PostTripletex
 	{
 		public static void Welcome()
 		{
-			Console.WriteLine("Post/Delete Tripletex");
+			Console.WriteLine("Tripletex services");
 			Console.WriteLine("  Commands:");
 			Console.WriteLine("     q             - quit program");
 			Console.WriteLine("     sync          - manual sync");
