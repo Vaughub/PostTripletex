@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using PostTripletex.Model;
 using RestSharp;
 
@@ -28,9 +26,7 @@ namespace PostTripletex
 
 			var data = response.Data.Values.Select(d => $"{d.number},{d.name},{d.id}").ToArray();
 
-			FileDoc.DeleteFile("Product.csv");
-
-			FileDoc.WriteFile(data, "Product.csv");
+			FileDoc.WriteFile(data, "Product.csv", "Number,Name,Id");
 		}
 
 		public static async Task Customer()
@@ -46,9 +42,7 @@ namespace PostTripletex
 
 			var data = response.Data.Values.Select(d => $"{d.name},{d.id}").ToArray();
 
-			FileDoc.DeleteFile("Customer.csv");
-
-			FileDoc.WriteFile(data, "Customer.csv");
+			FileDoc.WriteFile(data, "Customer.csv", "Name,Id");
 		}
 
 		public static async Task<long[]> Subscription()

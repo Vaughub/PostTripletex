@@ -45,7 +45,7 @@ namespace PostTripletex
 
 				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
 
-				if (HttpStatusCode.Created != response.StatusCode) throw new ArgumentException($"Contact post error: {response.StatusCode}");
+				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
 				Console.Write($"\r{i + 1} Contact created");
 			}
@@ -87,7 +87,10 @@ namespace PostTripletex
 
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
-				FileDoc.WriteFile(response.Data.Value, "Product.csv");
+				var data = response.Data.Value;
+				var dataString = $"{data.number},{data.name},{data.id}";
+
+				FileDoc.AppendFile(dataString, "Product.csv");
 
 				Console.Write($"\r{i + 1} Product created");
 			}
@@ -152,7 +155,10 @@ namespace PostTripletex
 
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
-				FileDoc.WriteFile(response.Data.Value, "Customer.csv");
+				var data = response.Data.Value;
+				var dataString = $"{data.name},{data.id}";
+
+				FileDoc.AppendFile(dataString, "Customer.csv");
 
 				Console.Write($"\r{i + 1} Customer created");
 			}

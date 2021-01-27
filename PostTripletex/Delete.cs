@@ -31,9 +31,7 @@ namespace PostTripletex
 				Console.Write($"\r{productNumber.Length - i} Product deleted");
 			}
 
-			FileDoc.DeleteFile("Product.csv");
-
-			if (productNumber.Length - number > 0) FileDoc.WriteFile(readFile.Take(readFile.Length - number).ToArray(), "Product.csv");
+			if (productNumber.Length - number > 0) FileDoc.WriteFile(readFile.Take(readFile.Length - number).ToArray(), "Product.csv", "Number,Name,Id");
 
 			Console.WriteLine("\n");
 			Console.Write("> ");
@@ -63,9 +61,7 @@ namespace PostTripletex
 				Console.Write($"\r{productNumber.Length - i} Customer deleted");
 			}
 
-			FileDoc.DeleteFile("Customer.csv");
-
-			if (productNumber.Length - number > 0) FileDoc.WriteFile(readFile.Take(readFile.Length - number).ToArray(), "Customer.csv");
+			if (productNumber.Length - number > 0) FileDoc.WriteFile(readFile.Take(readFile.Length - number).ToArray(), "Customer.csv", "Name,Id");
 
 			Console.WriteLine("\n");
 			Console.Write("> ");

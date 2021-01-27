@@ -2,49 +2,37 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using PostTripletex.Model;
 
 namespace PostTripletex
 {
 	public class FileDoc
 	{
-		private const string _directory = "Data";
+		private static readonly string _directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PostTripletex";
 
-		public static void WriteFile(KeyInfo info, string fileName)
+		public static void WriteFile(string[] info, string fileName, string startLine = "")
 		{
 			var filePath = Path.Combine(_directory, fileName);
-			
-			if (!File.Exists(filePath))
+				
+			if (!Directory.Exists(_directory)) Directory.CreateDirectory(_directory);
+
+			if (!string.IsNullOrEmpty(startLine))
 			{
-				Directory.CreateDirectory(_directory);
-
-				using var swr = File.CreateText(filePath);
-				swr.WriteLine(fileName == "Product.csv" ? "Number,Name,Id" : "Name,Id");
+				File.WriteAllText(filePath, startLine + "\n");
+				File.AppendAllLines(filePath, info);
 			}
-
-			using var sw = File.AppendText(filePath);
-			sw.WriteLine(fileName == "Product.csv" ? $"{info.number},{info.name},{info.id}" : $"{info.name},{info.id}");
+			else
+			{
+				File.WriteAllLines(filePath, info);
+			}
 		}
 
-		public static void WriteFile(string[] info, string fileName)
+		public static void AppendFile(string info, string fileName)
 		{
 			var filePath = Path.Combine(_directory, fileName);
 
-			if (!File.Exists(filePath))
-			{
-				Directory.CreateDirectory(_directory);
+			if (!Directory.Exists(_directory)) Directory.CreateDirectory(_directory);
 
-				using var swr = File.CreateText(filePath);
-				swr.WriteLine(fileName == "Product.csv" ? "Number,Name,Id" : "Name,Id");
-			}
-
-			foreach (var stg in info)
-			{
-				var strings = stg.Split(',');
-
-				using var sw = File.AppendText(filePath);
-				sw.WriteLine(fileName == "Product.csv" ? $"{strings[0]},{strings[1]},{strings[2]}" : $"{strings[0]},{strings[1]}");
-			}
+			File.AppendAllText(filePath, info + "\n");
 		}
 
 		public static string[] ReadFile(string fileName)
@@ -54,13 +42,6 @@ namespace PostTripletex
 			return File.Exists(filePath) ? File.ReadAllLines(filePath).Skip(1).ToArray() : null;
 		}
 
-		public static void DeleteFile(string fileName)
-		{
-			var filePath = Path.Combine(_directory, fileName);
-
-			if (File.Exists(filePath)) File.Delete(filePath);
-		}
-
 		public static string GetNumber(string fileName)
 		{
 			var filePath = Path.Combine(_directory, fileName);
@@ -68,9 +49,8 @@ namespace PostTripletex
 			if (!File.Exists(filePath)) return "0000";
 
 			var lastLine = File.ReadLines(filePath).Last().Split(',')[0];
-			var i = (int.Parse(lastLine) + 1).ToString().PadLeft(4, '0');
 
-			return i;
+			return int.TryParse(lastLine, out var numb) ? (numb + 1).ToString().PadLeft(4, '0') : "0000";
 		}
 
 		public static async Task<string[]> GetTokens()

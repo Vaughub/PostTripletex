@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using PostTripletex.Model;
@@ -22,7 +21,7 @@ namespace PostTripletex
 
 					await CreateSessionToken(new Credentials(tokens[0], tokens[1]));
 
-					File.WriteAllLines(Path.Combine("Data", "Tokens.txt"), tokens);
+					FileDoc.WriteFile(tokens, "Tokens.txt");
 
 					break;
 				}
