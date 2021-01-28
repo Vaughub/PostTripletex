@@ -48,7 +48,7 @@ namespace PostTripletex
 		private static async Task<string> GetSessionToken(Credentials credentials)
 		{
 			var client = new RestClient(_apiAuthEndpoint);
-			var request = new RestRequest();
+			var request = new RestRequest(Method.PUT);
 
 			request.AddHeader("Accept", "application/json");
 			request.AddJsonBody("text/plain", "");
@@ -56,11 +56,11 @@ namespace PostTripletex
 			request.AddQueryParameter("employeeToken", credentials.EmployeeToken);
 			request.AddQueryParameter("expirationDate", credentials.ExpirationDate);
 
-			var response = await client.PutAsync<SingleValueResponse<AuthResponse>>(request);
+			var response = await client.ExecuteAsync<SingleResponse<AuthResponse>>(request);
 
-			if (response.Value == null) throw new Exception("Authentication failed");
+			if (response.Data?.Value?.Token == null) ErrorHandler.Handel(response.Content);
 
-			return response.Value.Token;
+			return response.Data.Value.Token;
 		}
 	}
 

@@ -43,7 +43,7 @@ namespace PostTripletex
 				request.AddJsonBody(contact);
 				request.AddHeader("Authorization", $"Basic {Authentication.EncodedCredentials}");
 
-				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
+				var response = await client.ExecutePostAsync<SingleResponse<KeyInfo>>(request);
 
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
@@ -83,7 +83,7 @@ namespace PostTripletex
 				request.AddJsonBody(product);
 				request.AddHeader("Authorization", $"Basic {Authentication.EncodedCredentials}");
 
-				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
+				var response = await client.ExecutePostAsync<SingleResponse<KeyInfo>>(request);
 
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 
@@ -151,7 +151,7 @@ namespace PostTripletex
 				request.AddJsonBody(new {name = personNameGenerator.GenerateRandomFirstAndLastName()});
 				request.AddHeader("Authorization", $"Basic {Authentication.EncodedCredentials}");
 
-				var response = await client.ExecutePostAsync<SingleValueResponse<KeyInfo>>(request);
+				var response = await client.ExecutePostAsync<SingleResponse<KeyInfo>>(request);
 
 				if (!response.IsSuccessful) ErrorHandler.Handel(response.Content);
 

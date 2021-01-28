@@ -18,7 +18,7 @@ namespace PostTripletex.Model
 		public string name { get; set; }
 	}
 	
-	public class SingleValueResponse<T>
+	public class SingleResponse<T>
 	{
 		[JsonProperty("value")]
 		public T Value { get; set; }

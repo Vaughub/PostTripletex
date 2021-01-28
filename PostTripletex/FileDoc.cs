@@ -42,6 +42,13 @@ namespace PostTripletex
 			return File.Exists(filePath) ? File.ReadAllLines(filePath).Skip(1).ToArray() : null;
 		}
 
+		public static void DeleteFile(string fileName)
+		{
+			var filePath = Path.Combine(_directory, fileName);
+
+			File.Delete(filePath);
+		}
+
 		public static string GetNumber(string fileName)
 		{
 			var filePath = Path.Combine(_directory, fileName);

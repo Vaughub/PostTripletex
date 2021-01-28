@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +30,6 @@ namespace PostTripletex
 
 		private static async Task Run()
 		{
-	
 			var command = Console.ReadLine()?.Split(' ').Select(s => s.ToLower()).ToArray();
 
 			if (command?[0] == "q") Environment.Exit(0);
@@ -46,8 +44,8 @@ namespace PostTripletex
 
 			if (command?[0] == "token")
 			{
-				File.Delete(Path.Combine("Data", "Tokens.txt"));
-				Console.WriteLine("Done\n");
+				FileDoc.DeleteFile("Tokens.txt");
+				Console.Clear();
 
 				await Authentication.Authenticate();
 				await Get.Sync();
